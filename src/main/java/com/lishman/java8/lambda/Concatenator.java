@@ -6,6 +6,6 @@ package com.lishman.java8.lambda;
 public interface Concatenator {
     
     // Single Abstract Method (SAM)
-    public String concatenate(String x, String y);
+    String concatenate(String x, String y);
 
 }

@@ -7,6 +7,6 @@ package com.lishman.java8.lambda;
 public interface Calculator {
     
     // Single Abstract Method (SAM)
-    public void calculate(int x, int y);
+    int calculate(int x, int y);
 
 }

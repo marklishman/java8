@@ -1,40 +1,44 @@
 package com.lishman.java8.lambda;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.function.Function;
 import java.util.function.IntBinaryOperator;
+import java.util.function.IntToLongFunction;
 
 public class LambdaExample {
     
     public static void main(String[] args) {
-        new LambdaExample().lambda();
-        new LambdaExample().methodReference();
+//        new LambdaExample().lambda();
+        new LambdaExample().functionalInterfaces();
+//        new LambdaExample().methodReference();
     }
     
     private void lambda() {
 
-
         // Inner class
         Calculator calc = new Calculator() {
             @Override
-            public void calculate(int x, int y) {
-                System.out.println("Result: " + (x + y));
+            public int calculate(int x, int y) {
+                return x + y;
             }
-        }; 
-        calc.calculate(10,  20);
+        };
+        System.out.println("Inner class: " + calc.calculate(10, 20));
 
 
         // Anonymous inner class
         new Calculator() {
             @Override
-            public void calculate(int x, int y) {
-                System.out.println("Result: " + (x * y));
+            public int calculate(int x, int y) {
+                return x * y;
             }
-        }.calculate(5,  8);
+        }.calculate(5, 8);
+        System.out.println("Anonymous inner class: " + calc.calculate(10, 20));
 
 
         // Simple lambda expression
-        Calculator lambdaCalc = (dividend, divisor) -> System.out.println("Result: " + (dividend / divisor));
-        lambdaCalc.calculate(100, 20);
+        Calculator lambdaCalc = (dividend, divisor) -> dividend / divisor;
+        System.out.println("Lambda expression: " + lambdaCalc.calculate(100, 20));
 
 
         // Multi-statement lambda expression
@@ -42,14 +46,15 @@ public class LambdaExample {
             if (divisor == 0) {
                 throw new RuntimeException("Divide by zero");
             }
-            System.out.println("Result: " + (dividend / divisor));
+            return dividend / divisor;
         };
-        lambdaMultiCalc.calculate(40, 2);
+        System.out.println("Multi-statement lambda expression: " + lambdaMultiCalc.calculate(40, 2));
 
 
-        // Lambda expression returning a value
+        // Another lambda expression returning a value
         Concatenator concatenator = (first, second) -> first + second;
         System.out.println(concatenator.concatenate("abc", "xyz"));
+        System.out.println("Another lambda expression: " + lambdaCalc.calculate(100, 20));
 
 
         // Built-in interfaces
@@ -57,8 +62,38 @@ public class LambdaExample {
         new Thread(r).start();
         new Thread(r).start();
         new Thread(r).start();
+    }
+
+    private void functionalInterfaces() {
+
+        // Function composition
+        Function<Integer, Boolean> even = arg -> arg % 2 == 0;
+        System.out.println("Function: " + even.apply(6));
+
+        Function<String, String> reverse = arg -> StringUtils.reverse(arg);
+        Function<String, String> halve = arg -> arg.substring(0, arg.length() / 2);
+
+        System.out.println("Reverse then halve: " + reverse.andThen(halve).apply("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+        System.out.println("Reverse then halve: " + halve.compose(reverse).apply ("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+        System.out.println("Halve then reverse: " + reverse.compose(halve).apply ("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+        System.out.println("Halve then halve again: " + halve.compose(halve).apply ("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+
+
+
+
+
+
+        IntToLongFunction square = num -> num * num;
+        System.out.println("IntToLongFunction: " + square.applyAsLong(12));
+
+
         
     }
+
+
+
+
+
 
     private void methodReference() {
         
