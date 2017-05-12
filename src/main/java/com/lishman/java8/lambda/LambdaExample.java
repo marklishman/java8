@@ -11,7 +11,8 @@ public class LambdaExample {
     }
     
     private void lambda() {
-        
+
+
         // Inner class
         Calculator calc = new Calculator() {
             @Override
@@ -20,7 +21,8 @@ public class LambdaExample {
             }
         }; 
         calc.calculate(10,  20);
-        
+
+
         // Anonymous inner class
         new Calculator() {
             @Override
@@ -28,10 +30,12 @@ public class LambdaExample {
                 System.out.println("Result: " + (x * y));
             }
         }.calculate(5,  8);
-        
+
+
         // Simple lambda expression
         Calculator lambdaCalc = (dividend, divisor) -> System.out.println("Result: " + (dividend / divisor));
         lambdaCalc.calculate(100, 20);
+
 
         // Multi-statement lambda expression
         Calculator lambdaMultiCalc = (dividend, divisor) -> {
@@ -41,11 +45,13 @@ public class LambdaExample {
             System.out.println("Result: " + (dividend / divisor));
         };
         lambdaMultiCalc.calculate(40, 2);
-        
+
+
         // Lambda expression returning a value
         Concatenator concatenator = (first, second) -> first + second;
         System.out.println(concatenator.concatenate("abc", "xyz"));
-        
+
+
         // Built-in interfaces
         Runnable r = () -> System.out.println("Thread: " + Thread.currentThread().getName());
         new Thread(r).start();
