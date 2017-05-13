@@ -1,6 +1,6 @@
 package com.lishman.java8.lambda;
 
-public class Lambda {
+public class LambdaExample {
     
     public static void main(String[] args) {
 
@@ -26,7 +26,7 @@ public class Lambda {
 
         // Simple lambda expression
         Calculator lambdaCalc = (dividend, divisor) -> dividend / divisor;
-        System.out.println("Lambda expression: " + lambdaCalc.calculate(100, 20));
+        System.out.println("LambdaExample expression: " + lambdaCalc.calculate(100, 20));
 
 
         // Multi-statement lambda expression

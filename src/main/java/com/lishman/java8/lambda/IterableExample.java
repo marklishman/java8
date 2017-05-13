@@ -2,7 +2,7 @@ package com.lishman.java8.lambda;
 
 import java.util.Arrays;
 
-public class Iterables {
+public class IterableExample {
 
     public static void main(String[] args) {
 
