@@ -1,10 +1,12 @@
 package com.lishman.java8;
 
+// Eliminates the need for the 'Abstract' inheritance layer
+
 public interface DefaultMethodExample {
     
-    public void interfaceMethod();
+    void interfaceMethod();
     
-    default public void defaultMethod() {
+    default void defaultMethod() {
         interfaceMethod();
     }
     

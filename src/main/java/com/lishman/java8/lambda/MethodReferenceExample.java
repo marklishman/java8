@@ -22,6 +22,7 @@ public class MethodReferenceExample {
         
         // Built in method reference
         stringFunction(String::toLowerCase, "A STRING");
+
     }
     
     private void calc(IntBinaryOperator ibo, int x, int y) {
