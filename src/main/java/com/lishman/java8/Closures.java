@@ -17,7 +17,7 @@ public class Closures {
 //        Consumer<String> change = val -> externalString = "ppp";
 
         List<Integer> list = new ArrayList<>();
-        Consumer<Integer> listFunction = val -> list.add(val);
+        Consumer<Integer> listFunction = list::add;
         listFunction.accept(123);
         System.out.println("List size: " + list.size());
 
