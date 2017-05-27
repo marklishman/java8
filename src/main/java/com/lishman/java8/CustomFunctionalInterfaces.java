@@ -22,7 +22,6 @@ public class CustomFunctionalInterfaces {
     public static void main(String[] args) {
         System.out.println("Number of people: " + PeopleFunction.count().apply(getPeopleArray()));
         System.out.println("Average Age: " + PeopleFunction.average().apply(getPeopleArray()));
-
     }
 
 

@@ -5,7 +5,6 @@ package com.lishman.java8;
  * but NOT functions on their own.
  */
 
-
 public class SingleAbstractMethod {
 
     interface Calculator {
