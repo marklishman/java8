@@ -6,7 +6,7 @@ public class JoinerExample {
 
     public static void main(String[] args) {
         
-        String[] a = new String[] {"aaa", "bbb", "ccc"};
+        String[] a = {"aaa", "bbb", "ccc"};
 
         String result = String.join("-", a);
         System.out.println(result);
