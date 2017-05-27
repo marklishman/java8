@@ -12,7 +12,7 @@ import java.util.function.Predicate;
  * In fact they were implemented long before Java 8 by Google Guava.
  */
 
-public class FunctionalInterfaceExample {
+public class BuiltInFunctionalInterfaces {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
