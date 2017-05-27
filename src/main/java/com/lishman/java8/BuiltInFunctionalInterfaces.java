@@ -40,6 +40,8 @@ public class BuiltInFunctionalInterfaces {
         IntConsumer intConsumer = number -> list.add(number);
         intConsumer.accept(789);
 
+        // Also LongConsumer & DoubleConsumer
+
 
         //---------- Supplier
 
@@ -47,7 +49,7 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Supplied " + supplier.get());
         System.out.println("..and " + supplier.get());
 
-
+        // Supplier can be used to re-use the a stream
         IntStream intStream = IntStream.range(10, 24);
         Supplier<IntStream> sup = () -> IntStream.range(20, 27);
 
@@ -60,6 +62,20 @@ public class BuiltInFunctionalInterfaces {
 
         System.out.println("Supplier Count: " + sup.get().count());
         System.out.println("Supplier Count: " + sup.get().count());
+
+        LongSupplier longSupplier = () -> Long.MAX_VALUE;
+        System.out.println("Long Supplier: " + longSupplier.getAsLong());
+
+        // Also IntSupplier & DoubleSupplier
+
+
+        //---------- Predicate
+
+        Predicate<Integer> negativeCheck = value -> value < 0;
+        System.out.println("Predicate: " + negativeCheck.test(-123));
+        System.out.println("Negated Predicate: " + negativeCheck.negate().test(-123));
+        System.out.println("And Predicate: " + negativeCheck.and(integer -> integer > -100).test(-123));
+        System.out.println("Or Predicate: " + negativeCheck.or(integer -> integer > 100).test(123));
 
 
         //---------- UnaryFunction
