@@ -29,9 +29,23 @@ import java.util.stream.IntStream;
  *          ToDoubleBiFunction<T,U>
  *
  *
- *      Supplier
+ *      Supplier<T>
  *
- *      Consumer
+ *          IntSupplier
+ *          LongSupplier
+ *          DoubleSupplier
+ *          BooleanSupplier
+ *
+ *
+ *      Consumer<T>
+ *
+ *          IntConsumer
+ *          LongConsumer
+ *          DoubleConsumer
+ *          ObjIntConsumer<T>
+ *          ObjLongConsumer<T>
+ *          ObjDoubleConsumer<T>
+ *
  *
  *      Predicate
  */
