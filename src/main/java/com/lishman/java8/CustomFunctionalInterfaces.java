@@ -4,17 +4,9 @@ import java.util.Arrays;
 
 public class CustomFunctionalInterfaces {
 
-    static class Person {
-        final String name;
-        final int age;
-        Person(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-    }
-
     @FunctionalInterface
     private interface PeopleFunction<T> {
+
         T apply(Person[] people);
 
         static PeopleFunction<Integer> count() {
@@ -31,6 +23,16 @@ public class CustomFunctionalInterfaces {
         System.out.println("Number of people: " + PeopleFunction.count().apply(getPeopleArray()));
         System.out.println("Average Age: " + PeopleFunction.average().apply(getPeopleArray()));
 
+    }
+
+
+    static class Person {
+        final String name;
+        final int age;
+        Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
     }
 
     private static Person[] getPeopleArray() {
