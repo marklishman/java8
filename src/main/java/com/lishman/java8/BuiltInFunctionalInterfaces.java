@@ -7,6 +7,35 @@ import java.util.List;
 import java.util.function.*;
 import java.util.stream.IntStream;
 
+/*
+ *      Function<T,R>
+ *
+ *          IntFunction<R>
+ *          LongFunction<R>
+ *          DoubleFunction<R>
+ *
+ *          IntToLongFunction
+ *          IntToDoubleFunction
+ *          LongToIntFunction
+ *          LongToDoubleFunction
+ *          DoubleToIntFunction
+ *          DoubleToLongFunction
+ *
+ *
+ *      BiFunction<T,U,R>
+ *
+ *          ToIntBiFunction<T,U>
+ *          ToLongBiFunction<T,U>
+ *          ToDoubleBiFunction<T,U>
+ *
+ *
+ *      Supplier
+ *
+ *      Consumer
+ *
+ *      Predicate
+ */
+
 public class BuiltInFunctionalInterfaces {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
@@ -27,6 +56,14 @@ public class BuiltInFunctionalInterfaces {
         System.out.println(Function.identity().apply("yes"));
 
 
+        IntFunction square = number -> number * number;
+        System.out.println("Square: " + square.apply(33));
+
+
+        LongToDoubleFunction half = number -> (double) number / 2;
+        System.out.println("Half: " + half.applyAsDouble(33));
+
+
         //---------- Consumer
 
         List<Integer> list = new ArrayList<>();
@@ -39,8 +76,6 @@ public class BuiltInFunctionalInterfaces {
 
         IntConsumer intConsumer = number -> list.add(number);
         intConsumer.accept(789);
-
-        // Also LongConsumer & DoubleConsumer
 
 
         //---------- Supplier
@@ -65,8 +100,6 @@ public class BuiltInFunctionalInterfaces {
 
         LongSupplier longSupplier = () -> Long.MAX_VALUE;
         System.out.println("Long Supplier: " + longSupplier.getAsLong());
-
-        // Also IntSupplier & DoubleSupplier
 
 
         //---------- Predicate
