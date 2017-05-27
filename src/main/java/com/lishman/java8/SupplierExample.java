@@ -4,7 +4,7 @@ import java.util.IntSummaryStatistics;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-public class Function {
+public class SupplierExample {
 
     public static void main(String[] args) {
 
