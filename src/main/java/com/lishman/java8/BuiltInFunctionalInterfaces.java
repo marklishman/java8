@@ -97,11 +97,7 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Halve then reverse: " + reverseFunction.compose(halveFunction).apply (ALPHABET));
         System.out.println("Halve then halve again: " + halveFunction.compose(halveFunction).apply (ALPHABET));
 
-        // Not sure what use this is
-        System.out.println(Function.identity().apply("yes"));
-
-
-        // Identity
+        // Identity (use as a default - no action)
         String upperCase = Stream.of("one two three")
                 .flatMap(value -> splitter(value, text -> text.toUpperCase()))
                 .collect(Collectors.joining(" "));
@@ -130,6 +126,17 @@ public class BuiltInFunctionalInterfaces {
         LongToDoubleFunction longToDoubleFunction = number -> (double) number / 4;
         System.out.println("Quarter: " + longToDoubleFunction.applyAsDouble(55));
 
+        //---------- UnaryOperator<T>
+
+        UnaryOperator<int[]> unaryOperator = array -> Arrays.copyOfRange(array, 0, array.length / 2);
+        int[] half = unaryOperator.apply(new int[]{1, 2, 3, 4, 5, 6, 7, 8});
+        System.out.println("Half of array: " + Arrays.toString(half));
+
+
+        //---------- [Type]UnaryOperator
+
+        DoubleUnaryOperator doubleUnaryOperator = d -> d * d * d;
+        System.out.println("Power of 3: " + doubleUnaryOperator.applyAsDouble(4.4));
 
 
         // TODO check methods
