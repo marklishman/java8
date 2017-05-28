@@ -6,9 +6,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /*
@@ -41,7 +43,7 @@ import java.util.stream.Stream;
  *          ToLongBiFunction<T,U>
  *          ToDoubleBiFunction<T,U>
  *
- *     BinaryOperator<T>
+ *      BinaryOperator<T>
  *          IntBinaryOperator
  *          LongBinaryOperator
  *          DoubleBinaryOperator
@@ -133,6 +135,8 @@ public class BuiltInFunctionalInterfaces {
         int[] half = unaryOperator.apply(new int[]{1, 2, 3, 4, 5, 6, 7, 8});
         System.out.println("Half of array: " + Arrays.toString(half));
 
+        UnaryOperator<String> reverseUnaryOperator = StringUtils::reverse;
+        System.out.println("Reverse: " + reverseUnaryOperator.apply(ALPHABET));
 
         //---------- [Type]UnaryOperator
 
@@ -163,38 +167,11 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Max is " + longBinaryOperator.applyAsLong(20, 10));
 
 
+        //---------- Supplier<T>
 
-
-
-
-
-        // TODO check methods
-
-
-
-
-
-
-
-        //---------- Consumer
-
-        List<Integer> list = new ArrayList<>();
-        Consumer<Integer> consumer = number -> {
-            list.add(number);
-            System.out.printf("Added %s, Size: %s%n", number, list.size());
-        };
-        consumer.accept(123);
-        consumer.accept(456);
-
-        IntConsumer intConsumer = number -> list.add(number);
-        intConsumer.accept(789);
-
-
-        //---------- Supplier
-
-        Supplier<Integer> intSupplier = () -> 123;
-        System.out.println("Supplied " + intSupplier.get());
-        System.out.println("..and " + intSupplier.get());
+        Supplier<String> supplier = () -> "abc";
+        System.out.println("Supplied " + supplier.get());
+        System.out.println("..and " + supplier.get());
 
         // Supplier can be used to re-use the a stream
         IntStream intStream = IntStream.range(10, 24);
@@ -210,24 +187,56 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Supplier Count: " + sup.get().count());
         System.out.println("Supplier Count: " + sup.get().count());
 
-        LongSupplier longSupplier = () -> Long.MAX_VALUE;
-        System.out.println("Long Supplier: " + longSupplier.getAsLong());
+        //---------- [Type]Supplier
+
+        BooleanSupplier booleanSupplier = () -> supplier.get().startsWith("a");
+        System.out.println("Boolean Supplier: " + booleanSupplier.getAsBoolean());
 
 
-        //---------- Predicate
+        //---------- Consumer<T>
+
+        List<Integer> list = new ArrayList<>();
+        Consumer<Integer> consumer = number -> {
+            list.add(number);
+        };
+        consumer.accept(123);
+        consumer.accept(456);
+        consumer.andThen(number -> System.out.println("List: " + list)).accept(789);
+
+        //---------- [Type]Consumer<T>
+
+        IntConsumer intConsumer = number -> list.add(number);
+        intConsumer.accept(789);
+
+        //---------- Obj[Type]Consumer<T>
+
+        ObjLongConsumer<AtomicLong> objLongConsumer = (al, l) -> al.addAndGet(l);
+        AtomicLong atomicLong = new AtomicLong();
+        LongStream.rangeClosed(20, 50).forEach(
+                l -> objLongConsumer.accept(atomicLong, l)
+        );
+        System.out.println("Accumulator: " + atomicLong.get());
+
+
+        //---------- Predicate<T>
 
         Predicate<Integer> negativeCheck = value -> value < 0;
         System.out.println("Predicate: " + negativeCheck.test(-123));
         System.out.println("Negated Predicate: " + negativeCheck.negate().test(-123));
         System.out.println("And Predicate: " + negativeCheck.and(integer -> integer > -100).test(-123));
         System.out.println("Or Predicate: " + negativeCheck.or(integer -> integer > 100).test(123));
+        System.out.println("isEqual: " + Predicate.isEqual("abc").test("ab" + "c"));
+
+        //---------- [Type]Predicate
+
+        IntPredicate intPredicate = i -> i < 0;
+        System.out.println("Negative: " + intPredicate.test(-123));
 
 
-        //---------- UnaryFunction
+        //---------- BiPredicate<T,U>
 
-        UnaryOperator<String> reverseUnaryOperator = StringUtils::reverse;
-        System.out.println("Reverse: " + reverseUnaryOperator.apply(ALPHABET));
-
+        BiPredicate<String[], String> biPredicate = (array, s) -> Arrays.binarySearch(array, s) > -1;
+        System.out.println("String in Array? " + biPredicate.test(new String[]{"a","b","c"}, "b"));
 
     }
 
