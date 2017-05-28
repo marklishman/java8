@@ -2,10 +2,14 @@ package com.lishman.java8;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /*
  *      Function<T,R>
@@ -14,6 +18,10 @@ import java.util.stream.IntStream;
  *          LongFunction<R>
  *          DoubleFunction<R>
  *
+ *          ToIntFunction<T>
+ *          ToLongFunction<T>
+ *          ToDoubleFunction<T>
+ *
  *          IntToLongFunction
  *          IntToDoubleFunction
  *          LongToIntFunction
@@ -21,6 +29,11 @@ import java.util.stream.IntStream;
  *          DoubleToIntFunction
  *          DoubleToLongFunction
  *
+ *      UnaryOperator<T>
+ *
+ *          IntUnaryOperator
+ *          LongUnaryOperator
+ *          DoubleUnaryOperator
  *
  *      BiFunction<T,U,R>
  *
@@ -28,13 +41,21 @@ import java.util.stream.IntStream;
  *          ToLongBiFunction<T,U>
  *          ToDoubleBiFunction<T,U>
  *
+ *          BinaryOperator<T>
+ *          IntBinaryOperator
+ *          LongBinaryOperator
+ *          DoubleBinaryOperator
+ *
+ *
  *
  *      Supplier<T>
  *
  *          IntSupplier
  *          LongSupplier
  *          DoubleSupplier
+ *
  *          BooleanSupplier
+ *
  *
  *
  *      Consumer<T>
@@ -42,12 +63,22 @@ import java.util.stream.IntStream;
  *          IntConsumer
  *          LongConsumer
  *          DoubleConsumer
+ *
  *          ObjIntConsumer<T>
  *          ObjLongConsumer<T>
  *          ObjDoubleConsumer<T>
  *
+ *      BiConsumer<T,U>
  *
- *      Predicate
+ *
+ *
+ *      Predicate<T>
+ *
+ *          IntPredicate
+ *          LongPredicate
+ *          DoublePredicate
+ *
+ *      BiPredicate<T,U>
  */
 
 public class BuiltInFunctionalInterfaces {
@@ -56,26 +87,52 @@ public class BuiltInFunctionalInterfaces {
 
     public static void main(String[] args) {
 
-        //---------- Function
+        //---------- Function<T,R>
 
         Function<String, String> reverseFunction = StringUtils::reverse;
-        Function<String, String> halve = arg -> arg.substring(0, arg.length() / 2);
+        Function<String, String> halveFunction = arg -> arg.substring(0, arg.length() / 2);
 
-        System.out.println("Reverse then halve: " + reverseFunction.andThen(halve).apply(ALPHABET));
-        System.out.println("Reverse then halve: " + halve.compose(reverseFunction).apply (ALPHABET));
-        System.out.println("Halve then reverse: " + reverseFunction.compose(halve).apply (ALPHABET));
-        System.out.println("Halve then halve again: " + halve.compose(halve).apply (ALPHABET));
+        System.out.println("Reverse then halve: " + reverseFunction.andThen(halveFunction).apply(ALPHABET));
+        System.out.println("Reverse then halve: " + halveFunction.compose(reverseFunction).apply (ALPHABET));
+        System.out.println("Halve then reverse: " + reverseFunction.compose(halveFunction).apply (ALPHABET));
+        System.out.println("Halve then halve again: " + halveFunction.compose(halveFunction).apply (ALPHABET));
 
         // Not sure what use this is
         System.out.println(Function.identity().apply("yes"));
 
 
-        IntFunction square = number -> number * number;
-        System.out.println("Square: " + square.apply(33));
+        // Identity
+        String upperCase = Stream.of("one two three")
+                .flatMap(value -> splitter(value, text -> text.toUpperCase()))
+                .collect(Collectors.joining(" "));
+
+        System.out.println("Upper case: " + upperCase);
+
+        String identity = Stream.of("one two three")
+                .flatMap(value -> splitter(value, UnaryOperator.identity()))
+                .collect(Collectors.joining(" "));
+
+        System.out.println("No action" + identity);
 
 
-        LongToDoubleFunction half = number -> (double) number / 2;
-        System.out.println("Half: " + half.applyAsDouble(33));
+        //---------- [Type]Function<R>
+
+        LongFunction<BigDecimal> longFunction = number -> BigDecimal.valueOf(number).multiply(BigDecimal.valueOf(number));
+        System.out.println("Square: " + longFunction.apply(Long.MAX_VALUE));
+
+        //---------- To[Type]Function<T>
+
+        ToDoubleFunction<String> toDoubleFunction = value -> Double.parseDouble(value) / 2;
+        System.out.println("Half: " + toDoubleFunction.applyAsDouble("333"));
+
+        //---------- [Type]To[Type]Function
+
+        LongToDoubleFunction longToDoubleFunction = number -> (double) number / 4;
+        System.out.println("Quarter: " + longToDoubleFunction.applyAsDouble(55));
+
+
+
+        // TODO check methods
 
 
         //---------- Consumer
@@ -94,9 +151,9 @@ public class BuiltInFunctionalInterfaces {
 
         //---------- Supplier
 
-        Supplier<Integer> supplier = () -> 123;
-        System.out.println("Supplied " + supplier.get());
-        System.out.println("..and " + supplier.get());
+        Supplier<Integer> intSupplier = () -> 123;
+        System.out.println("Supplied " + intSupplier.get());
+        System.out.println("..and " + intSupplier.get());
 
         // Supplier can be used to re-use the a stream
         IntStream intStream = IntStream.range(10, 24);
@@ -131,6 +188,11 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Reverse: " + reverseUnaryOperator.apply(ALPHABET));
 
 
+    }
+
+    private static Stream<String> splitter(String s, UnaryOperator<String> function) {
+        return Arrays.stream(s.split(" "))
+                .map(function);
     }
 
 }
