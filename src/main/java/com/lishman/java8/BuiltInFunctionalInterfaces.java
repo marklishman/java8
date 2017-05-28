@@ -41,7 +41,7 @@ import java.util.stream.Stream;
  *          ToLongBiFunction<T,U>
  *          ToDoubleBiFunction<T,U>
  *
- *          BinaryOperator<T>
+ *     BinaryOperator<T>
  *          IntBinaryOperator
  *          LongBinaryOperator
  *          DoubleBinaryOperator
@@ -98,17 +98,17 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Halve then halve again: " + halveFunction.compose(halveFunction).apply (ALPHABET));
 
         // Identity (use as a default - no action)
-        String upperCase = Stream.of("one two three")
+        String withUpperCase = Stream.of("one two three")
                 .flatMap(value -> splitter(value, text -> text.toUpperCase()))
                 .collect(Collectors.joining(" "));
 
-        System.out.println("Upper case: " + upperCase);
+        System.out.println("Upper case: " + withUpperCase);
 
-        String identity = Stream.of("one two three")
+        String withIdentity = Stream.of("one two three")
                 .flatMap(value -> splitter(value, UnaryOperator.identity()))
                 .collect(Collectors.joining(" "));
 
-        System.out.println("No action" + identity);
+        System.out.println("No action" + withIdentity);
 
 
         //---------- [Type]Function<R>
@@ -126,6 +126,7 @@ public class BuiltInFunctionalInterfaces {
         LongToDoubleFunction longToDoubleFunction = number -> (double) number / 4;
         System.out.println("Quarter: " + longToDoubleFunction.applyAsDouble(55));
 
+
         //---------- UnaryOperator<T>
 
         UnaryOperator<int[]> unaryOperator = array -> Arrays.copyOfRange(array, 0, array.length / 2);
@@ -139,7 +140,40 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Power of 3: " + doubleUnaryOperator.applyAsDouble(4.4));
 
 
+        //---------- BiFunction<T,U,R>
+
+        BiFunction<int[], Integer, String> biFunction = (array, item) ->
+                String.format("%s was found at position %s", item, Arrays.binarySearch(array, item));
+        System.out.println(biFunction.apply(new int[]{10,20,30,40,50}, 30));
+
+
+        //---------- ToIntBiFunction<T,U>
+
+        ToIntBiFunction<String, Character> toIntBiFunction = (s, c) -> s.length() - s.replace(c.toString(), "").length();
+        System.out.println("Character count: " + toIntBiFunction.applyAsInt("Beware the moon", 'e'));
+
+        //---------- BinaryOperator<T>
+
+        BinaryOperator<String> binaryOperator = (x, y)  -> x.toUpperCase() + "_" + y.toUpperCase();
+        System.out.println("Uppercase concat: " + binaryOperator.apply("one", "two"));
+
+        //---------- [Type]BinaryOperator
+
+        LongBinaryOperator longBinaryOperator = (x, y) -> Math.max(x, y);
+        System.out.println("Max is " + longBinaryOperator.applyAsLong(20, 10));
+
+
+
+
+
+
+
         // TODO check methods
+
+
+
+
+
 
 
         //---------- Consumer
