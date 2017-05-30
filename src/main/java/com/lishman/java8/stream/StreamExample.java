@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,7 +21,12 @@ import java.util.stream.Stream;
 public class StreamExample {
 
     public static void main(String[] args) {
-        teams().stream().forEach(System.out::println);
+        Supplier<Stream> data = () -> teams().stream();
+
+        data.get().forEach(System.out::println);
+
+        long count = data.get().count();
+        System.out.println("Count: " + count);
     }
 
     private static <R> Predicate<R> not(Predicate<R> predicate) {
