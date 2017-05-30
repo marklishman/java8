@@ -26,7 +26,7 @@ public class StreamExample {
 
     private static List<Team> teams() {
 
-        String fileName = "data/world-cup-groups-2014.csv";
+        String fileName = "data/world-cup-2014.csv";
 
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 
