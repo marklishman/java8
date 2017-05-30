@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,9 +20,11 @@ import java.util.stream.Stream;
 public class StreamExample {
 
     public static void main(String[] args) {
-
         teams().stream().forEach(System.out::println);
+    }
 
+    private static <R> Predicate<R> not(Predicate<R> predicate) {
+        return predicate.negate();
     }
 
     private static List<Team> teams() {
@@ -31,8 +34,8 @@ public class StreamExample {
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 
             return stream
-                    .filter(row -> ! row.startsWith("Group"))
-                    .map(row -> Team.builder().row(row).build())
+                    .filter(not(row -> row.startsWith("Group")))
+                    .map(row -> Team.builder().teamCsv(row).build())
                     .collect(Collectors.toList());
 
         } catch (IOException e) {

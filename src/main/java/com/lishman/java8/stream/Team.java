@@ -19,8 +19,8 @@ final class Team {
     final public int points;
 
     @Builder
-    Team(final String row) {
-        String[] col = row.split(",");
+    Team(final String teamCsv) {
+        String[] col = teamCsv.split(",");
         group = col[0];
         position = Integer.parseInt(col[1]);
         name = col[2];
