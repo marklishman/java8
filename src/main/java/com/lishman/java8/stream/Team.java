@@ -26,12 +26,12 @@ final class Team {
         name = col[2];
         played = Integer.parseInt(col[3]);
         won = Integer.parseInt(col[4]);
-        drawn = Integer.parseInt(col[4]);
-        lost = Integer.parseInt(col[5]);
-        goalsFor = Integer.parseInt(col[6]);
-        goalsAgainst = Integer.parseInt(col[7]);
-        goalDifference = Integer.parseInt(col[8]);
-        points = Integer.parseInt(col[9]);
+        drawn = Integer.parseInt(col[5]);
+        lost = Integer.parseInt(col[6]);
+        goalsFor = Integer.parseInt(col[7]);
+        goalsAgainst = Integer.parseInt(col[8]);
+        goalDifference = Integer.parseInt(col[9]);
+        points = Integer.parseInt(col[10]);
     }
 
 }
