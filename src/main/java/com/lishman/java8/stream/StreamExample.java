@@ -25,7 +25,7 @@ public class StreamExample {
         //~~~~ intro
 
 
-
+        // TODO quick intro
 
 
         //~~~~ types / initializing
@@ -149,6 +149,8 @@ public class StreamExample {
 
         //~~~~ count, sum, average, min, max
 
+        // reduce methods
+
         long count = teams.get().count();
         System.out.println("Number of teams: " + count);
 
@@ -249,17 +251,56 @@ public class StreamExample {
 
         //~~~~ reduce
 
-//        String teamsWithNoPoints = data.get()
-//                .filter(team -> team.points == 0)
-//                .reduce(StringBuilder::new, (a, b) -> a + ", " + b)
+        int goalsScored = teams.get()
+                .map(team -> team.goalsFor)
+                .reduce(( total, goalsFor) -> total + goalsFor)
+                .orElse(0);
+        System.out.println("Goals scored: " + goalsScored);
+
+        teams.get()
+                .map(team -> team.goalsFor)
+                .reduce(0, (total, goalsFor) -> total + goalsFor);
+
+        teams.get().reduce(0, (total, team) -> total + team.goalsFor, Integer::sum);
+
 
         //~~~~ collect
 
+        String teamsWithNoPoints = teams.get()
+                .filter(team -> team.points == 0)
+                .map(team -> team.name)
+                .collect(StringBuilder::new,
+                        (sb, name) -> sb.append(" ").append(name),
+                        (sb1, sb2) -> sb1.append(sb2))
+                .toString();
+        System.out.println("Teams with no points: " + teamsWithNoPoints);
+
+        List<String> teamNameList = teams.get()
+                .filter(t -> t.group.equals("A"))
+                .map(t -> t.name)
+                .collect(ArrayList<String>::new,
+                        (list, name) -> list.add(name),
+                        (list1, list2) -> list1.addAll(list2));
+        System.out.println("Group A team names: " + teamNameList);
+
+
         // collect(Collector<? super T,A,R> collector)
-        // collect(Supplier<R> supplier, BiConsumer<R,? super T> accumulator, BiConsumer<R,R> combiner)
+
+        /*
+            reduce() vs collect()
+
+            Both terminal operations, reduce() and collect(), are categorized as reduction operations.
+
+            In collect() operations, elements are incorporated by updating the state of a mutable
+            container object.
+
+            In reduce() operations result is updated by replacing the previous result.
+        */
+
+        // TODO collectors
 
 
-        // filter with not()
+
 
     }
 
