@@ -78,6 +78,7 @@ public class StreamExample {
 
         teams.get().mapToDouble(team -> team.points).forEachOrdered(System.out::println);
 
+
         //~~~~ filter
 
         integers.filter(i -> i % 2 ==0).forEach(System.out::println);
@@ -93,6 +94,8 @@ public class StreamExample {
 
         //~~~~ find
         /*
+             forEachOrdered() above
+
              Some streams, such as a List or Array stream, are intrinsically ordered.
              In other words, they have an encounter order.
              Some intermediate stream operations, such as sorted(), introduce an encounter order.
@@ -176,7 +179,22 @@ public class StreamExample {
         timer.limit(5).forEach(System.out::println);
 
 
+        //~~~~ sorted
+
+        teams.get().map(t -> t.name).sorted().forEach(System.out::println);
+
+        // not the same as
+        // teams.get().map(t -> t.name).forEachOrdered(System.out::println);
+
+        teams.get()
+                .sorted((t1, t2) -> Integer.compare(t2.points, t1.points))
+                .map(t -> t.name)
+                .limit(5)
+                .forEachOrdered(System.out::println);
+
+
         //~~~~ distinct
+
         teams.get().map(t -> t.group).distinct().forEach(System.out::println);
 
 
@@ -208,6 +226,17 @@ public class StreamExample {
         Arrays.stream(numberGroups)
                 .flatMapToDouble(group -> Arrays.stream(group))
                 .forEachOrdered(System.out::println);
+
+
+        //~~~~ to array
+
+        Object[] teamsAsArray = teams.get().toArray();
+
+        String[] groupHNames = teams.get()
+                .filter(t -> t.group.equals("H"))
+                .map(t -> t.name)
+                .toArray(String[]::new);
+        System.out.println("Group H teams: " + Arrays.toString(groupHNames));
 
 
         //~~~~ reduce
