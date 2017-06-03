@@ -4,26 +4,33 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.*;
 
 /**
  *      Whirlwind! tour!
+ *
+ *      Write for Future Me
  */
 
 public class StreamExample {
 
     public static void main(String[] args) {
 
+
+        //~~~~ intro
+
+
+
+
+
         //~~~~ types / initializing
 
         Stream<String> words = Stream.of("one", "two", "three");
 
-        IntStream integers = IntStream.range(5, 10);
+        IntStream integers = IntStream.range(25, 50);
 
         LongStream longs = LongStream.rangeClosed(15, 20);
 
@@ -37,51 +44,96 @@ public class StreamExample {
                 .add(789)
                 .build();
 
-        Stream<Date> timer = Stream.generate(() -> getDateAfterOneSecond());
+        Stream<Date> timer = Stream.generate(StreamExample::getDateAfterOneSecond);
 
         Stream<BigDecimal> timerIter = Stream.iterate(BigDecimal.ZERO, bd -> bd.add(BigDecimal.TEN));
 
         List<Team> teamList = teams();
-        Stream<Team> teams = teamList.stream();
+        Stream<Team> teamStream = teamList.stream();
+
+        Supplier<Stream<Team>> teams = () -> teams().stream();
 
         Stream<String> moreWords = Arrays.stream("four, five, six".split(","));
 
+        Stream<String> concat = Stream.concat(words, moreWords);
 
+        Stream empty = Stream.empty();
 
-
-
-        timerIter.limit(100).skip(80).forEach(System.out::println);
-
-        timer.limit (5).forEach(System.out::println);
-
-
-
-
-        Supplier<Stream<Team>> data = () -> teams().stream();
 
         //~~~~ for each
 
-        data.get().forEach(System.out::println);
+        longs.forEach(System.out::println);
 
 
-        //~~~~ match
+        //~~~~ map
 
-        boolean allMatch = data.get().allMatch(team -> team.group != null);
-        System.out.println("All teams have a group: " + allMatch);
+        teams.get().map(team -> team.name).forEach(System.out::println);
 
-        boolean anyMatch = data.get().anyMatch(team -> team.drawn == 3);
-        System.out.println("At least one country drew all its games? " + anyMatch);
+
+        //~~~~ filter
+
+        integers.filter(i -> i % 2 ==0).forEach(System.out::println);
+
+        teams.get().filter(t -> t.group.equals("C")).forEach(t -> System.out.println(t.name));
+
+        // map and filter together
+        teams.get()
+                .filter(t -> t.group.equals("C"))
+                .map(t -> t.name)
+                .forEach(System.out::println);
+
+
+        //~~~~ find
+
+        Optional<String> anyTeamFromGroupD = teams.get()
+                .filter(t -> t.group.equals("D"))
+                .map(t -> t.name)
+                .findAny();
+        System.out.println("Any group D team: " + anyTeamFromGroupD.get());
+
+        Optional<String> firstTeamFromGroupD = teams.get()
+                .filter(t -> t.group.equals("D"))
+                .map(t -> t.name)
+                .findAny();
+        System.out.println("First group D team: " + firstTeamFromGroupD.get());
+
+        Optional<String> anyTeamFromGroupZ = teams.get()
+                .filter(t -> t.group.equals("Z"))
+                .map(t -> t.name)
+                .findAny();
+        System.out.println("Any group Z team: " + anyTeamFromGroupZ.orElse("none"));
 
 
         //~~~~ count, sum etc
 
-        long count = data.get().count();
+        long count = teams.get().count();
         System.out.println("Number of teams: " + count);
 
-        long sum = data.get().mapToInt(team -> team.goalsFor).sum();
+        long sum = teams.get().mapToInt(team -> team.goalsFor).sum();
         System.out.println("Total number of goals: " + sum);
 
-        // Summary statistics
+        DoubleSummaryStatistics stats = doubles.summaryStatistics();
+        System.out.println(stats);
+
+
+        //~~~~ match
+
+        boolean allMatch = teams.get().allMatch(team -> team.group != null);
+        System.out.println("All teams have a group: " + allMatch);
+
+        boolean anyMatch = teams.get().anyMatch(team -> team.drawn == 3);
+        System.out.println("At least one country drew all its games? " + anyMatch);
+
+
+        //~~~~ skip, limit
+
+        timerIter.limit(100).skip(80).forEach(System.out::println);
+
+        timer.limit(5).forEach(System.out::println);
+
+
+        //~~~~ distinct
+        teams.get().map(t -> t.group).distinct().forEach(System.out::println);
 
 
         //~~~~ reduce
@@ -90,7 +142,13 @@ public class StreamExample {
 //                .filter(team -> team.points == 0)
 //                .reduce(StringBuilder::new, (a, b) -> a + ", " + b)
 
+        //~~~~ collect
 
+        // collect(Collector<? super T,A,R> collector)
+        // collect(Supplier<R> supplier, BiConsumer<R,? super T> accumulator, BiConsumer<R,R> combiner)
+
+
+        // filter with not()
 
     }
 
