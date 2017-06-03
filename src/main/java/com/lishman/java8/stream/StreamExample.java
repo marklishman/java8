@@ -71,6 +71,20 @@ public class StreamExample {
         LongStream moreLongs = LongStream.rangeClosed(15, 20);
         moreLongs.forEachOrdered(System.out::println);
 
+        /*
+             Some streams, such as a List or Array stream, are intrinsically ordered.
+             In other words, they have an encounter order.
+             Some intermediate stream operations, such as sorted(), introduce an encounter order.
+
+             forEachOrdered() is guaranteed to return the elements in this encounter order.
+             For streams, such as a HashSet, which are not ordered, forEachOrdered() will return elements in any order.
+
+             forEach() does not guarantee the order of the returned elements.
+             It is non-deterministic - it may return a different order each time.
+             However, it can perform better with parallel operations.
+
+         */
+
 
         //~~~~ map
 
@@ -94,12 +108,6 @@ public class StreamExample {
 
         //~~~~ find
         /*
-             forEachOrdered() above
-
-             Some streams, such as a List or Array stream, are intrinsically ordered.
-             In other words, they have an encounter order.
-             Some intermediate stream operations, such as sorted(), introduce an encounter order.
-
              findFirst() is guaranteed to find the first one in this encounter order.
              For streams, such as a HashSet, which are not ordered, findFirst() will return any element.
 
