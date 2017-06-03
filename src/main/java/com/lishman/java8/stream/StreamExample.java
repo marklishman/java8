@@ -1,5 +1,7 @@
 package com.lishman.java8.stream;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -62,7 +64,12 @@ public class StreamExample {
 
         //~~~~ for each
 
+        // order is non-deterministic
         longs.forEach(System.out::println);
+
+        // order guaranteed
+        LongStream moreLongs = LongStream.rangeClosed(15, 20);
+        moreLongs.forEachOrdered(System.out::println);
 
 
         //~~~~ map
@@ -84,6 +91,19 @@ public class StreamExample {
 
 
         //~~~~ find
+        /*
+             Some streams, such as a List or Array stream, are intrinsically ordered.
+             In other words, they have an encounter order.
+             Some intermediate stream operations, such as sorted(), introduce an encounter order.
+
+             findFirst() is guaranteed to find the first one in this encounter order.
+             For streams, such as a HashSet, which are not ordered, findFirst() will return any element.
+
+             findAny() returns any element.
+             It is non-deterministic - it may return different values each time.
+             However, it can perform better with parallel operations.
+
+         */
 
         Optional<String> anyTeamFromGroupD = teams.get()
                 .filter(t -> t.group.equals("D"))
@@ -136,6 +156,40 @@ public class StreamExample {
         teams.get().map(t -> t.group).distinct().forEach(System.out::println);
 
 
+        //~~~~ flatMap
+
+        String[] groups = new String[] {
+                "one, two, three",
+                "four, five, siz",
+                "seven, eight, nine"
+        };
+        Arrays.stream(groups)
+                .flatMap(group -> Arrays.stream(group.split(",")))
+                .forEach(System.out::println);
+
+        long negativeCount = teamRows()
+                .stream()
+                .flatMap(row -> Arrays.stream(row.split(",")))
+                .filter(NumberUtils::isCreatable)
+                .mapToInt(NumberUtils::createInteger)
+                .filter(item -> item < 0)
+                .count();
+        System.out.println("Negative count: " + negativeCount);
+
+        double[][] numberGroups = {
+                {3,6,2},
+                {1.4,2.2},
+                {10,8,6,4,2}
+        };
+        Arrays.stream(numberGroups)
+                .flatMapToDouble(group -> Arrays.stream(group))
+                .forEachOrdered(System.out::println);
+
+
+
+
+
+
         //~~~~ reduce
 
 //        String teamsWithNoPoints = data.get()
@@ -162,17 +216,17 @@ public class StreamExample {
     }
 
     private static List<Team> teams() {
+        return teamRows()
+                .stream()
+                .filter(not(row -> row.startsWith("Group")))
+                .map(row -> Team.builder().teamCsv(row).build())
+                .collect(Collectors.toList());
+    }
 
+    private static List<String> teamRows() {
         String fileName = "data/world-cup-2014.csv";
-
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-
-            return stream
-                    .skip(1)
-//                    .filter(not(row -> row.startsWith("Group")))
-                    .map(row -> Team.builder().teamCsv(row).build())
-                    .collect(Collectors.toList());
-
+            return stream.collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
