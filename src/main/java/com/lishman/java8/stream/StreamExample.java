@@ -76,6 +76,7 @@ public class StreamExample {
 
         teams.get().map(team -> team.name).forEach(System.out::println);
 
+        teams.get().mapToDouble(team -> team.points).forEachOrdered(System.out::println);
 
         //~~~~ filter
 
@@ -124,13 +125,33 @@ public class StreamExample {
         System.out.println("Any group Z team: " + anyTeamFromGroupZ.orElse("none"));
 
 
-        //~~~~ count, sum etc
+        //~~~~ peek
+
+        // mainly used for debugging
+        teams.get()
+                .filter(t -> t.group.equals("D"))
+                .peek(System.out::println)
+                .map(t -> t.name)
+                .peek(System.out::println)
+                .findAny();
+
+
+        //~~~~ count, sum, average, min, max
 
         long count = teams.get().count();
         System.out.println("Number of teams: " + count);
 
         long sum = teams.get().mapToInt(team -> team.goalsFor).sum();
         System.out.println("Total number of goals: " + sum);
+
+        OptionalDouble averagePoints = teams.get().mapToDouble(team -> team.points).average();
+        System.out.println("Average points: " + averagePoints.orElse(0));
+
+        OptionalInt maxGoalDiff = teams.get().mapToInt(team -> team.goalDifference).max();
+        System.out.println("Maximum goal difference: " + maxGoalDiff.orElse(0));
+
+        OptionalInt minGoalDiff = teams.get().mapToInt(team -> team.goalDifference).min();
+        System.out.println("Minimum goal difference: " + minGoalDiff.orElse(0));
 
         DoubleSummaryStatistics stats = doubles.summaryStatistics();
         System.out.println(stats);
@@ -140,6 +161,9 @@ public class StreamExample {
 
         boolean allMatch = teams.get().allMatch(team -> team.group != null);
         System.out.println("All teams have a group: " + allMatch);
+
+        boolean noneMatch = teams.get().noneMatch(team -> team.group.equals("Z"));
+        System.out.println("No teams have a group of 'Z': " + noneMatch);
 
         boolean anyMatch = teams.get().anyMatch(team -> team.drawn == 3);
         System.out.println("At least one country drew all its games? " + anyMatch);
@@ -159,9 +183,9 @@ public class StreamExample {
         //~~~~ flatMap
 
         String[] groups = new String[] {
-                "one, two, three",
-                "four, five, siz",
-                "seven, eight, nine"
+                "one,two,three",
+                "four,five,six",
+                "seven,eight,nine"
         };
         Arrays.stream(groups)
                 .flatMap(group -> Arrays.stream(group.split(",")))
@@ -184,10 +208,6 @@ public class StreamExample {
         Arrays.stream(numberGroups)
                 .flatMapToDouble(group -> Arrays.stream(group))
                 .forEachOrdered(System.out::println);
-
-
-
-
 
 
         //~~~~ reduce
