@@ -1,10 +1,14 @@
 package com.lishman.java8.stream;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
+@Getter
 final class Team {
+
+    // TODO change to private, use Team::getName
 
     final public String name;
     final public String group;

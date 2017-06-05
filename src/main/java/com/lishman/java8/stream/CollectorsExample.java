@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.*;
@@ -97,6 +98,24 @@ public class CollectorsExample {
 
         String names = teams.get().collect(Collectors.mapping(team -> team.name, Collectors.joining(", ")));
         System.out.println("Team names: " + names);
+
+        Map<String, List<Team>> teamsByGroup = teams.get()
+                .collect(Collectors.groupingBy(Team::getGroup));
+        System.out.println("Teams by group: " + teamsByGroup);
+
+        Map<String, List<String>> teamNamesByGroup = teams.get()
+                .collect(Collectors.groupingBy(Team::getGroup,
+                        Collectors.mapping(Team::getName, Collectors.toList())));
+        System.out.println("Team names by group: " + teamNamesByGroup);
+
+        Map<String, Integer> groupGoals = teams.get()
+                .collect(Collectors.groupingBy(Team::getGroup,
+                         Collectors.summingInt(Team::getGoalsFor)));
+        System.out.println("Group goals: " + groupGoals);
+
+        // groupingBy with downstream
+
+
     }
 
     private static List<Team> teams() {
