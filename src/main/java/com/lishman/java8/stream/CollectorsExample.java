@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -83,10 +84,16 @@ public class CollectorsExample {
 
         System.out.println("Count: " + teams.get().collect(Collectors.counting()));
         System.out.println("Sum: " + teams.get().collect(Collectors.summingInt(team -> team.goalsFor)));
+        System.out.println("Average: " + teams.get().collect(Collectors.averagingDouble(team -> team.goalsFor)));
 
+        System.out.println("Team with lowest points: " + teams.get()
+                .collect(Collectors.minBy(Comparator.comparingInt((t) -> t.points)))
+                .map(team -> team.name)
+                .get());
+        // maxBy too
 
-
-
+        System.out.println("Points stats: " + teams.get()
+                .collect(Collectors.summarizingDouble((t -> t.points))));
 
         String names = teams.get().collect(Collectors.mapping(team -> team.name, Collectors.joining(", ")));
         System.out.println("Team names: " + names);
