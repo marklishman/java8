@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.*;
@@ -37,8 +35,8 @@ public class CollectorsExample {
 
         Stream<BigDecimal> timerIter = Stream.iterate(BigDecimal.ZERO, bd -> bd.add(BigDecimal.TEN));
 
-        List<Team> teamList = teams();
-        Stream<Team> teamStream = teamList.stream();
+        List<Team> listOfTeams = teams();
+        Stream<Team> teamStream = listOfTeams.stream();
 
         Supplier<Stream<Team>> teams = () -> teams().stream();
 
@@ -113,8 +111,38 @@ public class CollectorsExample {
                          Collectors.summingInt(Team::getGoalsFor)));
         System.out.println("Group goals: " + groupGoals);
 
-        // groupingBy with downstream
+        // TODO groupingBy with downstream
+        // TODO groupingByConcurrent
 
+        Map<Boolean, List<Team>> teamsWithPositiveGoalDifference = teams.get()
+                .collect(Collectors.partitioningBy(t -> t.goalDifference > 0));
+        System.out.println("Goal difference (team): " + teamsWithPositiveGoalDifference);
+
+        Map<Boolean, List<String>> teamNamesWithPositiveGoalDifference = teams.get()
+                .collect(Collectors.partitioningBy(team -> team.goalDifference > 0,
+                        Collectors.mapping(Team::getName, Collectors.toList())));
+        System.out.println("Goal difference (name): " + teamNamesWithPositiveGoalDifference);
+
+
+        /*
+            The reducing() collectors are most useful when used in a multi-level reduction,
+            downstream of groupingBy or partitioningBy. To perform a simple reduction on a stream,
+            use Stream.reduce(BinaryOperator) instead.
+         */
+
+//        Comparator<Team> points = Comparator.comparing(Team::getPoints);
+//        Map<String, Team> mostPointsByGroup = teams.get()
+//                .collect(Collectors.groupingBy(Team::getGroup,
+//                        Collectors.reducing(BinaryOperator.maxBy(points)));
+
+        List<Team> unmodifiableTeams = teams.get()
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+        System.out.println("Unmodifiable list: " + unmodifiableTeams);
+
+        Collection<Team> teamCollectiion = teams.get().collect(Collectors.toCollection(ArrayList::new));
+        List<Team> teamList = teams.get().collect(Collectors.toList());
+        Set<Team> teamSet = teams.get().collect(Collectors.toSet());
+        Map<String, Team> teamMap = teams.get().collect(Collectors.toMap(Team::getName, Function.identity()));
 
     }
 
