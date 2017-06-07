@@ -1,4 +1,4 @@
-package com.lishman.java8.stream;
+package com.lishman.functional.stream;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.lishman.java8.collections;
+package com.lishman.functional.collections;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.OptionalDouble;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import com.lishman.java8.Person;
+import com.lishman.functional.Person;
 
 public class StreamsExample {
 

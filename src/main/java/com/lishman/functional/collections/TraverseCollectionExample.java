@@ -1,6 +1,6 @@
-package com.lishman.java8.collections;
+package com.lishman.functional.collections;
 
-import com.lishman.java8.Person;
+import com.lishman.functional.Person;
 
 import java.util.Arrays;
 import java.util.List;

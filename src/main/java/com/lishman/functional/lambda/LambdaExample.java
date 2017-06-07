@@ -1,4 +1,4 @@
-package com.lishman.java8.lambda;
+package com.lishman.functional.lambda;
 
 public class LambdaExample {
     

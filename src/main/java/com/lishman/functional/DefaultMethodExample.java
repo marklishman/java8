@@ -1,4 +1,4 @@
-package com.lishman.java8;
+package com.lishman.functional;
 
 // Eliminates the need for the 'Abstract' inheritance layer
 

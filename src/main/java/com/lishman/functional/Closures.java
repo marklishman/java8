@@ -1,4 +1,4 @@
-package com.lishman.java8;
+package com.lishman.functional;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.lishman.java8.stream;
+package com.lishman.functional.stream;
 
 import java.io.IOException;
 import java.math.BigDecimal;

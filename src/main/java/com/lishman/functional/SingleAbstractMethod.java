@@ -1,4 +1,4 @@
-package com.lishman.java8;
+package com.lishman.functional;
 
 /**
  * Objects with methods can be stored and passed around,

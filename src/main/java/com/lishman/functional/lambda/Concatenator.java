@@ -1,11 +1,11 @@
-package com.lishman.java8.lambda;
+package com.lishman.functional.lambda;
 
 // A functional interface has a single abstract method
 
 @FunctionalInterface
-public interface Calculator {
+public interface Concatenator {
     
     // Single Abstract Method (SAM)
-    int calculate(int x, int y);
+    String concatenate(String x, String y);
 
 }
