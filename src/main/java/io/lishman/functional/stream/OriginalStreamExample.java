@@ -1,4 +1,4 @@
-package io.lishman.functional.original;
+package io.lishman.functional.stream;
 
 import io.lishman.functional.Person;
 
@@ -9,12 +9,12 @@ import java.util.OptionalDouble;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class StreamsExample {
+public class OriginalStreamExample {
 
     public static void main(String[] args) {
-        new StreamsExample().streamMethod();
-        new StreamsExample().streamsFromArray();
-        new StreamsExample().aggregation();
+        new OriginalStreamExample().streamMethod();
+        new OriginalStreamExample().streamsFromArray();
+        new OriginalStreamExample().aggregation();
     }
 
     public void streamMethod() {

@@ -1,4 +1,4 @@
-package io.lishman.functional;
+package io.lishman.functional.function;
 
 import org.apache.commons.lang3.StringUtils;
 

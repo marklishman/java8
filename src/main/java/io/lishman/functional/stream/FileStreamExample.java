@@ -1,4 +1,4 @@
-package io.lishman.functional;
+package io.lishman.functional.stream;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Files;

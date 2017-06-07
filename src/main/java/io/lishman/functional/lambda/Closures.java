@@ -1,4 +1,4 @@
-package io.lishman.functional;
+package io.lishman.functional.lambda;
 
 import java.util.ArrayList;
 import java.util.List;

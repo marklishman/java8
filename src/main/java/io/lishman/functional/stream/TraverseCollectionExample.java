@@ -1,4 +1,4 @@
-package io.lishman.functional.original;
+package io.lishman.functional.stream;
 
 import io.lishman.functional.Person;
 
