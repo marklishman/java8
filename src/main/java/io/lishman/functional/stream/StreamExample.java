@@ -1,4 +1,4 @@
-package com.lishman.functional.stream;
+package io.lishman.functional.stream;
 
 import org.apache.commons.lang3.math.NumberUtils;
 

@@ -1,4 +1,4 @@
-package com.lishman.functional;
+package io.lishman.functional;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
