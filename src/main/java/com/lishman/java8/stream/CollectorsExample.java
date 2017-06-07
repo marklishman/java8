@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -130,10 +131,16 @@ public class CollectorsExample {
             use Stream.reduce(BinaryOperator) instead.
          */
 
-//        Comparator<Team> points = Comparator.comparing(Team::getPoints);
-//        Map<String, Team> mostPointsByGroup = teams.get()
-//                .collect(Collectors.groupingBy(Team::getGroup,
-//                        Collectors.reducing(BinaryOperator.maxBy(points)));
+        Comparator<Team> byNumber = Comparator.comparing(Team::getPoints);
+        Map<String, Optional<Team>> firstResult =  teams.get()
+                .collect(Collectors.groupingBy(Team::getGroup, Collectors.reducing(BinaryOperator.maxBy(byNumber))));
+
+        firstResult.forEach( (key, value) -> System.out.printf("Group %s max is %s%n", key, value.map(Team::getName).orElse("not known")) );
+
+        Map<String, Integer> secondResult =  teams.get()
+                .collect(Collectors.groupingBy(Team::getGroup, Collectors.reducing(0, Team::getPoints, Integer::sum)));
+
+        secondResult.forEach( (key, value) -> System.out.printf("Group %s total is %s%n", key, value) );
 
         List<Team> unmodifiableTeams = teams.get()
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
@@ -143,6 +150,8 @@ public class CollectorsExample {
         List<Team> teamList = teams.get().collect(Collectors.toList());
         Set<Team> teamSet = teams.get().collect(Collectors.toSet());
         Map<String, Team> teamMap = teams.get().collect(Collectors.toMap(Team::getName, Function.identity()));
+
+        // Custom
 
     }
 
