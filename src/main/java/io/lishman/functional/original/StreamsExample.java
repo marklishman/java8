@@ -1,4 +1,4 @@
-package io.lishman.functional.collections;
+package io.lishman.functional.original;
 
 import io.lishman.functional.Person;
 
