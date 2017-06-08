@@ -7,9 +7,9 @@ public class SimpleStream {
 
     public static void main(String[] args) {
 
-        List<String> strings = Arrays.asList("apple", "pear", "orange", "peach", "pear", "pineapple");
+        List<String> fruits = Arrays.asList("plum", "pear", "apple", "peach", "orange", "pear");
 
-        int length = strings.stream()
+        int length = fruits.stream()
                 .filter(fruit -> fruit.startsWith("p"))
                 .distinct()
                 .mapToInt(fruit -> fruit.length())
