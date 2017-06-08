@@ -12,7 +12,7 @@ public class SimpleStream {
         int length = fruits.stream()
                 .filter(fruit -> fruit.startsWith("p"))
                 .distinct()
-                .mapToInt(fruit -> fruit.length())
+                .mapToInt(String::length)
                 .sum();
 
         System.out.println("Total length of fruit names beginning with 'p' is " + length);
