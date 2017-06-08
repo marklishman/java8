@@ -81,7 +81,7 @@ public class StreamExample {
 
              forEach() does not guarantee the order of the returned elements.
              It is non-deterministic - it may return a different order each time.
-             However, it can perform better with parallel operations.
+             However, it can perform better with parallel operations.≤
 
          */
 
