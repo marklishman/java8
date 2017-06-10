@@ -1,4 +1,4 @@
-package io.lishman.functional.function;
+package io.lishman.functional.functionalinterface;
 
 // Eliminates the need for the 'Abstract' inheritance layer
 
