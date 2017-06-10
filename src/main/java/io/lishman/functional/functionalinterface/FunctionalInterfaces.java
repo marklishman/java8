@@ -11,7 +11,7 @@ public class FunctionalInterfaces {
     public static void main(String[] args) {
 
 
-        //---------- Function<T,R>
+        //~~~~ Function<T,R>
 
         Function<String, Integer> textSize = new Function<String, Integer>() {
             @Override
@@ -30,7 +30,7 @@ public class FunctionalInterfaces {
         System.out.println("Square of 12 is " + square.apply(12));
 
 
-        //---------- BiFunction<T,U,R>
+        //~~~~ BiFunction<T,U,R>
 
         BiFunction<int[], Integer, String> position = new BiFunction<int[], Integer, String>() {
             @Override
@@ -41,7 +41,7 @@ public class FunctionalInterfaces {
         System.out.println(position.apply(new int[]{10,20,30,40,50}, 30));
 
 
-        //---------- ToIntBiFunction<T,U>
+        //~~~~ ToIntBiFunction<T,U>
 
         ToIntBiFunction<String, Character> charCount = new ToIntBiFunction<String, Character>() {
             @Override
@@ -52,7 +52,7 @@ public class FunctionalInterfaces {
         System.out.println("'e' count " + charCount.applyAsInt("one two three",'e'));
 
 
-        //---------- Predicate<T>
+        //~~~~ Predicate<T>
 
         Predicate<Integer> negativeCheck = new Predicate<Integer>() {
             @Override
@@ -63,7 +63,7 @@ public class FunctionalInterfaces {
         System.out.println("Number is negative? " + negativeCheck.test(-123));
 
 
-        //---------- BiPredicate<T,U>
+        //~~~~ BiPredicate<T,U>
 
         BiPredicate<String[], String> findString = new BiPredicate<String[], String>() {
             @Override

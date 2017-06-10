@@ -89,7 +89,7 @@ public class BuiltInFunctionalInterfaces {
 
     public static void main(String[] args) {
 
-        //---------- Function<T,R>
+        //~~~~ Function<T,R>
 
         Function<String, String> reverseFunction = StringUtils::reverse;
         Function<String, String> halveFunction = arg -> arg.substring(0, arg.length() / 2);
@@ -113,23 +113,23 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("No action" + withIdentity);
 
 
-        //---------- [Type]Function<R>
+        //~~~~ [Type]Function<R>
 
         LongFunction<BigDecimal> longFunction = number -> BigDecimal.valueOf(number).multiply(BigDecimal.valueOf(number));
         System.out.println("Square: " + longFunction.apply(Long.MAX_VALUE));
 
-        //---------- To[Type]Function<T>
+        //~~~~ To[Type]Function<T>
 
         ToDoubleFunction<String> toDoubleFunction = value -> Double.parseDouble(value) / 2;
         System.out.println("Half: " + toDoubleFunction.applyAsDouble("333"));
 
-        //---------- [Type]To[Type]Function
+        //~~~~ [Type]To[Type]Function
 
         LongToDoubleFunction longToDoubleFunction = number -> (double) number / 4;
         System.out.println("Quarter: " + longToDoubleFunction.applyAsDouble(55));
 
 
-        //---------- UnaryOperator<T>
+        //~~~~ UnaryOperator<T>
 
         UnaryOperator<int[]> unaryOperator = array -> Arrays.copyOfRange(array, 0, array.length / 2);
         int[] half = unaryOperator.apply(new int[]{1, 2, 3, 4, 5, 6, 7, 8});
@@ -138,36 +138,36 @@ public class BuiltInFunctionalInterfaces {
         UnaryOperator<String> reverseUnaryOperator = StringUtils::reverse;
         System.out.println("Reverse: " + reverseUnaryOperator.apply(ALPHABET));
 
-        //---------- [Type]UnaryOperator
+        //~~~~ [Type]UnaryOperator
 
         DoubleUnaryOperator doubleUnaryOperator = d -> d * d * d;
         System.out.println("Power of 3: " + doubleUnaryOperator.applyAsDouble(4.4));
 
 
-        //---------- BiFunction<T,U,R>
+        //~~~~ BiFunction<T,U,R>
 
         BiFunction<int[], Integer, String> biFunction = (array, item) ->
                 String.format("%s was found at position %s", item, Arrays.binarySearch(array, item));
         System.out.println(biFunction.apply(new int[]{10,20,30,40,50}, 30));
 
 
-        //---------- ToIntBiFunction<T,U>
+        //~~~~ ToIntBiFunction<T,U>
 
         ToIntBiFunction<String, Character> toIntBiFunction = (s, c) -> s.length() - s.replace(c.toString(), "").length();
         System.out.println("Character count: " + toIntBiFunction.applyAsInt("Beware the moon", 'e'));
 
-        //---------- BinaryOperator<T>
+        //~~~~ BinaryOperator<T>
 
         BinaryOperator<String> binaryOperator = (x, y)  -> x.toUpperCase() + "_" + y.toUpperCase();
         System.out.println("Uppercase concat: " + binaryOperator.apply("one", "two"));
 
-        //---------- [Type]BinaryOperator
+        //~~~~ [Type]BinaryOperator
 
         LongBinaryOperator longBinaryOperator = (x, y) -> Math.max(x, y);
         System.out.println("Max is " + longBinaryOperator.applyAsLong(20, 10));
 
 
-        //---------- Supplier<T>
+        //~~~~ Supplier<T>
 
         Supplier<String> supplier = () -> "abc";
         System.out.println("Supplied " + supplier.get());
@@ -187,13 +187,13 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Supplier Count: " + sup.get().count());
         System.out.println("Supplier Count: " + sup.get().count());
 
-        //---------- [Type]Supplier
+        //~~~~ [Type]Supplier
 
         BooleanSupplier booleanSupplier = () -> supplier.get().startsWith("a");
         System.out.println("Boolean Supplier: " + booleanSupplier.getAsBoolean());
 
 
-        //---------- Consumer<T>
+        //~~~~ Consumer<T>
 
         List<Integer> list = new ArrayList<>();
         Consumer<Integer> consumer = number -> {
@@ -203,12 +203,12 @@ public class BuiltInFunctionalInterfaces {
         consumer.accept(456);
         consumer.andThen(number -> System.out.println("List: " + list)).accept(789);
 
-        //---------- [Type]Consumer<T>
+        //~~~~ [Type]Consumer<T>
 
         IntConsumer intConsumer = number -> list.add(number);
         intConsumer.accept(789);
 
-        //---------- Obj[Type]Consumer<T>
+        //~~~~ Obj[Type]Consumer<T>
 
         ObjLongConsumer<AtomicLong> objLongConsumer = (al, l) -> al.addAndGet(l);
         AtomicLong atomicLong = new AtomicLong();
@@ -218,7 +218,7 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Accumulator: " + atomicLong.get());
 
 
-        //---------- Predicate<T>
+        //~~~~ Predicate<T>
 
         Predicate<Integer> negativeCheck = value -> value < 0;
         System.out.println("Predicate: " + negativeCheck.test(-123));
@@ -227,13 +227,13 @@ public class BuiltInFunctionalInterfaces {
         System.out.println("Or Predicate: " + negativeCheck.or(integer -> integer > 100).test(123));
         System.out.println("isEqual: " + Predicate.isEqual("abc").test("ab" + "c"));
 
-        //---------- [Type]Predicate
+        //~~~~ [Type]Predicate
 
         IntPredicate intPredicate = i -> i < 0;
         System.out.println("Negative: " + intPredicate.test(-123));
 
 
-        //---------- BiPredicate<T,U>
+        //~~~~ BiPredicate<T,U>
 
         BiPredicate<String[], String> biPredicate = (array, s) -> Arrays.binarySearch(array, s) > -1;
         System.out.println("String in Array? " + biPredicate.test(new String[]{"a","b","c"}, "b"));
