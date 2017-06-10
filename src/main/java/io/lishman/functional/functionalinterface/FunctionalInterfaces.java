@@ -32,24 +32,24 @@ public class FunctionalInterfaces {
 
         //---------- BiFunction<T,U,R>
 
-        BiFunction<int[], Integer, String> indexOfMessage = new BiFunction<int[], Integer, String>() {
+        BiFunction<int[], Integer, String> position = new BiFunction<int[], Integer, String>() {
             @Override
             public String apply(int[] array, Integer item) {
-                return String.format("%s was found at position %s", item, Arrays.binarySearch(array, item));
+                return String.format("%s found at %s", item, Arrays.binarySearch(array, item));
             }
         };
-        System.out.println(indexOfMessage.apply(new int[]{10,20,30,40,50}, 30));
+        System.out.println(position.apply(new int[]{10,20,30,40,50}, 30));
 
 
         //---------- ToIntBiFunction<T,U>
 
-        ToIntBiFunction<String, Character> characterCount = new ToIntBiFunction<String, Character>() {
+        ToIntBiFunction<String, Character> charCount = new ToIntBiFunction<String, Character>() {
             @Override
             public int applyAsInt(String s, Character c) {
                 return s.length() - s.replace(c.toString(), "").length();
             }
         };
-        System.out.println("Character 'e' count " + characterCount.applyAsInt("ene two three",'e'));
+        System.out.println("'e' count " + charCount.applyAsInt("one two three",'e'));
 
 
         //---------- Predicate<T>
@@ -65,13 +65,14 @@ public class FunctionalInterfaces {
 
         //---------- BiPredicate<T,U>
 
-        BiPredicate<String[], String> findStringInArray = new BiPredicate<String[], String>() {
+        BiPredicate<String[], String> findString = new BiPredicate<String[], String>() {
             @Override
             public boolean test(String[] array, String s) {
                 return Arrays.binarySearch(array, s) > -1;
             }
         };
-        System.out.println("String is in array? " + findStringInArray.test(new String[]{"a","b","c"}, "b"));
+        System.out.println("String is in array? " +
+                findString.test(new String[]{"a","b","c"}, "b"));
 
     }
 }
