@@ -3,7 +3,7 @@ package io.lishman.functional;
 import java.util.Arrays;
 import java.util.List;
 
-public class SimpleStream {
+public class SimpleStreamExample {
 
     public static void main(String[] args) {
 

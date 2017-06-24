@@ -1,4 +1,4 @@
-package io.lishman.functional.functionalinterface;
+package io.lishman.functional.lambda;
 
 import org.apache.commons.lang3.StringUtils;
 

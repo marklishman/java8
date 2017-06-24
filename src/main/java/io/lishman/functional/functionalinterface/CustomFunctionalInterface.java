@@ -2,7 +2,7 @@ package io.lishman.functional.functionalinterface;
 
 import java.util.Arrays;
 
-public class CustomFunctionalInterfaces {
+public class CustomFunctionalInterface {
 
     @FunctionalInterface
     private interface PeopleFunction<T> {

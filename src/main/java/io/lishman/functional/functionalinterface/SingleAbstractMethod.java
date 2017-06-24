@@ -2,7 +2,7 @@ package io.lishman.functional.functionalinterface;
 
 import java.util.Comparator;
 
-public class FunctionalInterfaceExample {
+public class SingleAbstractMethod {
 
     Comparator<Integer> comparator = new Comparator<Integer>() {
         @Override

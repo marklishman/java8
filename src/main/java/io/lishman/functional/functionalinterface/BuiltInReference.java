@@ -83,7 +83,7 @@ import java.util.stream.Stream;
  *      BiPredicate<T,U>
  */
 
-public class BuiltInFunctionalInterfaces {
+public class BuiltInReference {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
