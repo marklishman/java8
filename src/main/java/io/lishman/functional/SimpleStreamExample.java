@@ -16,6 +16,5 @@ public class SimpleStreamExample {
                 .sum();
 
         System.out.println("Total length of fruit names beginning with 'p' is " + length);
-
     }
 }
