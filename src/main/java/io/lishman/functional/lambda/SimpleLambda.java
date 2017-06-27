@@ -10,7 +10,7 @@ public class SimpleLambda {
         int MyFunctionalMethod(int value);
     }
 
-    // using an anonymous inner class
+    // using an anonymous inner class (to remind us how ugly they are)
     MyFunctionalInterface myFunctionalInterface = new MyFunctionalInterface() {
         @Override
         public int MyFunctionalMethod(int value) {
