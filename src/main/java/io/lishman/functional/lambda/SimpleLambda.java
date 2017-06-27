@@ -38,7 +38,6 @@ public class SimpleLambda {
     };
 
 
-
     // another example
 
     Function<String, Integer> function = new Function<String, Integer>() {

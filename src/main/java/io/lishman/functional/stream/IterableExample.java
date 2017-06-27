@@ -1,4 +1,4 @@
-package io.lishman.functional.lambda;
+package io.lishman.functional.stream;
 
 import java.util.Arrays;
 

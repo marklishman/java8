@@ -11,7 +11,7 @@ public class MethodReferenceExample {
 
     private void methodReference() {
 
-        // LambdaExample expression (just calls the method)
+        // Lambda expression calling the method
         calc((x, y) -> multiply(x, y), 20, 40);
         
         // Method reference
@@ -37,7 +37,7 @@ public class MethodReferenceExample {
         return first + second;
     }
     
-    public void stringFunction(Function<String, String> stringOperator, String s) {
+    private void stringFunction(Function<String, String> stringOperator, String s) {
         System.out.println(stringOperator.apply(s));
     }
     
