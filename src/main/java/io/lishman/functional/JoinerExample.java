@@ -1,5 +1,7 @@
 package io.lishman.functional;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
@@ -25,12 +27,19 @@ public class JoinerExample {
         Person.getPeopleList().forEach(p -> sj2.add(p.name));
         System.out.println(sj2);
 
-        String joined = Person.getPeopleList()
+        String joined = getPeopleList()
                 .stream()
                 .map(p -> p.name)
                 .collect(Collectors.joining(", "));
         System.out.println(joined);
         
+    }
+
+    private static List<Person> getPeopleList() {
+        return Arrays.asList(
+                new Person("Rita", 19),
+                new Person("Sue", 21),
+                new Person("Bob", 32));
     }
     
 }
