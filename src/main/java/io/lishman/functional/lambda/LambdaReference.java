@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.IntToLongFunction;
 import java.util.function.Predicate;
 
-public class LambdaExamples {
+public class LambdaReference {
 
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
