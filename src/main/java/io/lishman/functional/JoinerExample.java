@@ -1,6 +1,7 @@
 package io.lishman.functional;
 
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class JoinerExample {
 
@@ -23,6 +24,12 @@ public class JoinerExample {
         StringJoiner sj2 = new StringJoiner(" and ");
         Person.getPeopleList().forEach(p -> sj2.add(p.name));
         System.out.println(sj2);
+
+        String joined = Person.getPeopleList()
+                .stream()
+                .map(p -> p.name)
+                .collect(Collectors.joining(", "));
+        System.out.println(joined);
         
     }
     

@@ -1,5 +1,6 @@
 package io.lishman.functional.stream;
 
+import io.lishman.functional.Person;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ import java.util.stream.*;
 public class StreamReference {
 
     public static void main(String[] args) {
+
+        List<Person> people = Person.getPeopleList();
 
 
         //~~~~ intro
@@ -105,6 +108,14 @@ public class StreamReference {
                 .map(t -> t.name)
                 .forEach(System.out::println);
 
+
+        // separate predicate
+        Predicate<Person> pred = (p) -> p.age > 20;
+
+        // stream
+        people.stream()
+                .filter(pred)
+                .forEach(System.out::println);
 
         //~~~~ find
         /*
@@ -283,23 +294,11 @@ public class StreamReference {
                         (list1, list2) -> list1.addAll(list2));
         System.out.println("Group A team names: " + teamNameList);
 
-
-        // collect(Collector<? super T,A,R> collector)
-
-        /*
-            reduce() vs collect()
-
-            Both terminal operations, reduce() and collect(), are categorized as reduction operations.
-
-            In collect() operations, elements are incorporated by updating the state of a mutable
-            container object.
-
-            In reduce() operations result is updated by replacing the previous result.
-        */
-
-        // TODO collectors
-
-
+        // sorting
+        Optional<Person> youngest = people.stream().min(StreamReference::comparePersonByAge);
+        if (youngest.isPresent()) {
+            System.out.println("Youngest: " + youngest.get());
+        }
 
 
     }
@@ -333,6 +332,10 @@ public class StreamReference {
 
     private static <R> Predicate<R> not(Predicate<R> predicate) {
         return predicate.negate();
+    }
+
+    private static int comparePersonByAge(Person p1, Person p2) {
+        return new Integer(p1.age).compareTo(p2.age);
     }
 
 }
