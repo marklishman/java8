@@ -17,7 +17,7 @@ import java.util.stream.*;
  *      Write for Future Me
  */
 
-public class StreamExample {
+public class StreamReference {
 
     public static void main(String[] args) {
 
@@ -46,7 +46,7 @@ public class StreamExample {
                 .add(789)
                 .build();
 
-        Stream<Date> timer = Stream.generate(StreamExample::getDateAfterOneSecond);
+        Stream<Date> timer = Stream.generate(StreamReference::getDateAfterOneSecond);
 
         Stream<BigDecimal> timerIter = Stream.iterate(BigDecimal.ZERO, bd -> bd.add(BigDecimal.TEN));
 
@@ -62,7 +62,7 @@ public class StreamExample {
         Stream empty = Stream.empty();
 
 
-        //~~~~ for each
+        //~~~~ forEach
 
         // order is non-deterministic
         longs.forEach(System.out::println);

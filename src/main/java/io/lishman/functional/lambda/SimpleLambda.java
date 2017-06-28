@@ -60,4 +60,49 @@ public class SimpleLambda {
     Function<String, Integer> lambda4 = String::length;
 
     ToIntFunction<String> lambda5 = String::length;
+
+
+    // and another example
+
+    @FunctionalInterface
+    interface Calculator {
+        // Single Abstract Method (SAM)
+        int calculate(int x, int y);
+    }
+
+    public static void main(String[] args) {
+
+        SimpleLambda.Calculator sum = new SimpleLambda.Calculator() {
+            @Override
+            public int calculate(int x, int y) {
+                return x + y;
+            }
+        };
+
+        // multiple arguments must be wrapped in parentheses
+        SimpleLambda.Calculator lambdaSum = (a, b) -> a + b;
+
+        System.out.println("Sum: " + lambdaSum.calculate(10, 20));
+
+
+        int product = new SimpleLambda.Calculator() {
+            @Override
+            public int calculate(int x, int y) {
+                return x * y;
+            }
+        }.calculate(10, 20);
+
+        SimpleLambda.Calculator lambdaProduct = (a, b) -> a * b;
+
+        System.out.println("Product: " + lambdaProduct.calculate(10, 20));
+
+
+        // we can pass the functional interface as a parameter
+        logger(120, 200, lambdaProduct);
+    }
+
+    private static void logger(final int x, final int y, final SimpleLambda.Calculator calculator) {
+        System.out.printf("Values: %s and %s, Result: %s%n", x, y, calculator.calculate(x, y));
+    }
+
 }
