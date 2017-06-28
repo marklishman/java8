@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.*;
 
-public class CollectorsExample {
+public class CollectorsExamples {
 
     public static void main(String[] args) {
 

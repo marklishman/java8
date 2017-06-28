@@ -3,10 +3,10 @@ package io.lishman.functional.lambda;
 import java.util.function.Function;
 import java.util.function.IntBinaryOperator;
 
-public class MethodReferenceExample {
+public class MethodReferenceExamples {
     
     public static void main(String[] args) {
-        new MethodReferenceExample().methodReference();
+        new MethodReferenceExamples().methodReference();
     }
 
     private void methodReference() {
@@ -18,7 +18,7 @@ public class MethodReferenceExample {
         calc(this::multiply, 20, 40);
         
         // Static method reference
-        calc(MethodReferenceExample::add, 20, 40);
+        calc(MethodReferenceExamples::add, 20, 40);
         
         // Built in method reference
         stringFunction(String::toLowerCase, "A STRING");
